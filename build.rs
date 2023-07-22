@@ -11,7 +11,7 @@ async fn main() -> Result<()> {
     let database_url = &env::var("DATABASE_URL").context("DATABASE_URL not set")?;
 
     let pool = sqlx::pool::Pool::<Postgres>::connect(database_url).await?;
-    sqlx::migrate!("./migrations").run(&pool).await?;
+    sqlx::migrate!().run(&pool).await?;
 
     Ok(())
 }
