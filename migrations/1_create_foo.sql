@@ -1,0 +1,1 @@
+create table foo (name text not null, magic_number int4 not null);

@@ -1,0 +1,1 @@
+insert into foo (name, magic_number) values ($1, $2);
