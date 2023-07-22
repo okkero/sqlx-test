@@ -3,6 +3,7 @@ use std::env;
 use anyhow::{anyhow, bail, Context, Result};
 
 #[derive(Debug)]
+#[allow(unused)]
 struct Foo {
     name: String,
     magic_number: i32,
