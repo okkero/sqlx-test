@@ -36,16 +36,12 @@ async fn main() -> Result<()> {
                 .ok_or(anyhow!("Please supply magic number"))?
                 .parse::<i32>()
                 .context("Invalid number")?;
-            sqlx::query_file!("src/sql/insert_foo.sql", name, magic_number)
+            sqlx::query_file!("src/sql/insert_foo.sql", name, magic_number, "MAGIC!!")
                 .execute(&pool)
                 .await?;
         }
         _ => bail!("Invalid cmd"),
     }
-
-    sqlx::query!("insert into foo (name, magic_number, magic_text) values ('a', 42, null)")
-        .execute(&pool)
-        .await?;
 
     Ok(())
 }
