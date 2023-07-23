@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "select * from foo;",
+  "query": "select *, 'lol' as \"random!\" from foo;",
   "describe": {
     "columns": [
       {
@@ -17,6 +17,11 @@
         "ordinal": 2,
         "name": "magic_text",
         "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "random!",
+        "type_info": "Text"
       }
     ],
     "parameters": {
@@ -25,8 +30,9 @@
     "nullable": [
       false,
       false,
-      false
+      false,
+      null
     ]
   },
-  "hash": "5a8b45a9d6db20442cc1d54a5cf8e2485f6563f83c7d6a565d122e50523bf94d"
+  "hash": "5b84d6fc3a2f6dfb3d23ac8bb411d31870dc6ee2bf5efae3dcbdd7148dc46504"
 }
