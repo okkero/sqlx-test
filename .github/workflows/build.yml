@@ -18,20 +18,20 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Rust toolchain
         run: rustup show
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: build
       - name: Install SQLx CLI
         uses: actions-rs/cargo@v1
         with:
           command: install
           args: sqlx-cli
-      - uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: build
 
       - name: Prepare CI database
         run: sqlx migrate run
 
       - name: Check .sqlx file
-        run: sqlx prepare --check
+        run: cargo sqlx prepare --check
       - if: failure()
         run: echo 'Please run `sqlx prepare` to update the .sqlx file'
 
