@@ -22,18 +22,15 @@ jobs:
         with:
           shared-key: build
       - name: Install SQLx CLI
-        uses: actions-rs/cargo@v1
+        uses: baptiste0928/cargo-install@v2
         with:
-          command: install
-          args: sqlx-cli
+          crate: sqlx-cli
 
       - name: Prepare CI database
         run: sqlx migrate run
 
       - name: Check .sqlx file
         run: cargo sqlx prepare --check
-      - if: failure()
-        run: echo 'Please run `sqlx prepare` to update the .sqlx file'
 
       - name: Clippy
         uses: actions-rs/clippy-check@v1
