@@ -1,1 +1,1 @@
-select * from foo;
+select *, 'lol' as "random!" from foo;

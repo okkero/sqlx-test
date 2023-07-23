@@ -9,6 +9,7 @@ struct Foo {
     name: String,
     magic_number: i32,
     magic_text: String,
+    random: String,
 }
 
 #[tokio::main]
