@@ -1,0 +1,12 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "insert into foo (name, magic_number, magic_text) values ('a', 42, null)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": []
+  },
+  "hash": "e638e6298169ee3c827bee120715ca084ebfcf2b726e2171c3eb9bdfcc33e0a6"
+}

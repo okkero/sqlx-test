@@ -1,17 +1,26 @@
 use std::env;
+use std::env::VarError;
 
-use anyhow::{Context, Result};
-use sqlx::Postgres;
+use anyhow::{bail, Result};
+use sqlx::{Pool, Postgres};
 
 #[tokio::main]
 async fn main() -> Result<()> {
     println!("cargo:rerun-if-changed=migrations");
 
     dotenv::dotenv().ok();
-    let database_url = &env::var("DATABASE_URL").context("DATABASE_URL not set")?;
-
-    let pool = sqlx::pool::Pool::<Postgres>::connect(database_url).await?;
-    sqlx::migrate!().run(&pool).await?;
+    match env::var("DATABASE_URL") {
+        Ok(database_url) => {
+            let pool = Pool::<Postgres>::connect(&database_url).await?;
+            sqlx::migrate!().run(&pool).await?;
+        }
+        Err(VarError::NotPresent) => {
+            println!("cargo:warning=DATABASE_URL env var not set. Skipping migrations.");
+        }
+        Err(error) => {
+            bail!("Unable to read DATABASE_URL env var: {error:?}");
+        }
+    }
 
     Ok(())
 }

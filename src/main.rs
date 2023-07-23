@@ -1,12 +1,14 @@
 use std::env;
 
 use anyhow::{anyhow, bail, Context, Result};
+use sqlx::Pool;
 
 #[derive(Debug)]
 #[allow(unused)]
 struct Foo {
     name: String,
     magic_number: i32,
+    magic_text: String,
 }
 
 #[tokio::main]
@@ -16,7 +18,7 @@ async fn main() -> Result<()> {
     let mut args = env::args().skip(1);
     let cmd = args.next().ok_or(anyhow!("Please supply cmd"))?;
 
-    let pool = sqlx::pool::Pool::connect(&env::var("DATABASE_URL")?).await?;
+    let pool = Pool::connect(&env::var("DATABASE_URL")?).await?;
 
     match cmd.as_str() {
         "list" => {
@@ -39,6 +41,10 @@ async fn main() -> Result<()> {
         }
         _ => bail!("Invalid cmd"),
     }
+
+    sqlx::query!("insert into foo (name, magic_number, magic_text) values ('a', 42, null)")
+        .execute(&pool)
+        .await?;
 
     Ok(())
 }
